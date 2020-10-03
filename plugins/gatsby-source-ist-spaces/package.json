@@ -1,0 +1,16 @@
+{
+  "name": "gatsby-source-ist-spaces",
+  "version": "1.0.0",
+  "description": "Fetch Spaces data from the IST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"No build script setup\""
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "author": "Diogo Correia <me@diogotc.com>",
+  "license": "0BSD"
+}
