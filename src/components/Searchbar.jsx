@@ -11,7 +11,7 @@ const Searchbar = ({ setSearch }) => {
         placeholder="Search"
         onChange={handleChange}
       />
-      <StyledLabel for="search-input">Search</StyledLabel>
+      <StyledLabel htmlFor="search-input">Search</StyledLabel>
     </FormGroup>
   )
 }

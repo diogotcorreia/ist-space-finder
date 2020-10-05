@@ -2,11 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import Link from "./Link"
 
-const SpaceItem = ({ node }) => {
+const SpaceItem = ({ node, style }) => {
   const { istId, name, type, path } = node
 
   return (
-    <StyledRoot>
+    <StyledRoot style={style}>
       <p>
         <SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
         {` ${name} `}
@@ -17,7 +17,8 @@ const SpaceItem = ({ node }) => {
   )
 }
 
-const SpacePath = ({ path }) => {
+const SpacePath = ({ path = [] }) => {
+  if (path.length === 0) return null
   return path
     .map((pathItem, i) => (
       <span key={i}>
@@ -35,8 +36,11 @@ const formatType = str =>
     .replace("_", " ")}`
 
 const StyledRoot = styled.div`
-  padding-bottom: 8px;
-  border-bottom: solid 1px #454545;
+  height: 100px;
+  box-sizing: content-box;
+  &:not(:first-child) {
+    border-top: solid 1px #454545;
+  }
 `
 
 const colorMap = {

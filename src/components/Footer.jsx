@@ -6,7 +6,11 @@ const Footer = () => {
   return (
     <FooterStyle>
       <p>
-        Designed with &#x1F499; by{" "}
+        Designed with{" "}
+        <span role="img" aria-label="heart">
+          &#x1F499;
+        </span>{" "}
+        by{" "}
         <Link href="https://diogotc.com" target="_blank">
           Diogo Correia
         </Link>{" "}

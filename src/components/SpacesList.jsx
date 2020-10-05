@@ -56,9 +56,7 @@ const ListContainer = styled.div`
 `
 
 const SpacesListItem = ({ style, data, index }) => (
-  <div style={style}>
-    <SpaceItem node={data[index].node} />
-  </div>
+  <SpaceItem node={data[index].node} style={style} />
 )
 
 const NoItems = ({ ...props }) => (

@@ -16,7 +16,7 @@ export default function Home({ data }) {
 
 export const query = graphql`
   query homePageQuery {
-    allSpace(sort: { fields: name }, filter: { name: { ne: "" } }) {
+    allSpace(filter: { name: { ne: "" } }) {
       edges {
         node {
           id
