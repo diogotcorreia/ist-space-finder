@@ -29,19 +29,23 @@ const SpacesList = ({ spaces, search }) => {
   return (
     <ListContainer>
       <AutoSizer defaultHeight={500} defaultWidth={200}>
-        {({ width, height }) => (
-          <FixedSizeList
-            itemCount={spaces.length}
-            itemData={itemData}
-            itemKey={getItemKey}
-            itemSize={100}
-            width={width}
-            height={height}
-            ref={listRef}
-          >
-            {SpacesListItem}
-          </FixedSizeList>
-        )}
+        {({ width, height }) =>
+          itemData.length === 0 ? (
+            <NoItems style={{ width, height, textAlign: "center" }} />
+          ) : (
+            <FixedSizeList
+              itemCount={itemData.length}
+              itemData={itemData}
+              itemKey={getItemKey}
+              itemSize={100}
+              width={width}
+              height={height}
+              ref={listRef}
+            >
+              {SpacesListItem}
+            </FixedSizeList>
+          )
+        }
       </AutoSizer>
     </ListContainer>
   )
@@ -54,6 +58,12 @@ const ListContainer = styled.div`
 const SpacesListItem = ({ style, data, index }) => (
   <div style={style}>
     <SpaceItem node={data[index].node} />
+  </div>
+)
+
+const NoItems = ({ ...props }) => (
+  <div {...props}>
+    <h3>No spaces found</h3>
   </div>
 )
 
