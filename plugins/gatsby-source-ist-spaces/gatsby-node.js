@@ -18,18 +18,33 @@ const capitalize = str =>
 
 exports.sourceNodes = async ({
   actions,
+  cache,
   createContentDigest,
   createNodeId,
   getNodesByType,
 }) => {
-  const { createNode } = actions
+  const { createNode, touchNode } = actions
 
-  const crawlSpace = async id => {
+  const lastUpdated = await cache.get("lastUpdated")
+  // 30 days cache
+  if (lastUpdated > Date.now() - 1000 * 60 * 60 * 24 * 30) {
+    getNodesByType("Space").forEach(node => touchNode({ nodeId: node.id }))
+    return
+  }
+
+  await cache.set("lastUpdated", Date.now())
+
+  const crawlSpace = async (id, path = []) => {
     const { data: space } = await axios.get(
       `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}`
     )
 
-    const content = { name: space.name, type: space.type }
+    const content = {
+      istId: space.id,
+      name: (space.name || "").trim(),
+      type: space.type,
+      path,
+    }
 
     const parent = space.parentSpace
       ? createNodeId(
@@ -46,7 +61,6 @@ exports.sourceNodes = async ({
       parent,
       children,
       internal: {
-        //type: capitalize(space.type),
         type: "Space",
         content: JSON.stringify(content),
         contentDigest: createContentDigest(content),
@@ -54,7 +68,12 @@ exports.sourceNodes = async ({
     })
 
     await Promise.all(
-      (space.containedSpaces || []).map(childSpace => crawlSpace(childSpace.id))
+      (space.containedSpaces || []).map(childSpace =>
+        crawlSpace(childSpace.id, [
+          ...path,
+          `${capitalize(space.type)} ${space.name}`,
+        ])
+      )
     )
   }
 
