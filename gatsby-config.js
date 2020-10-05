@@ -9,6 +9,15 @@ module.exports = {
   plugins: [
     `gatsby-source-ist-spaces`,
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-react-head`,
+    {
+      resolve: `gatsby-plugin-web-font-loader`,
+      options: {
+        google: {
+          families: ["Open Sans"],
+        },
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

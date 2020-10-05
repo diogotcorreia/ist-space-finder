@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react"
-import { FixedSizeList } from "react-window"
-import SpaceItem from "./SpaceItem"
-import AutoSizer from "react-virtualized-auto-sizer"
 import Fuse from "fuse.js"
+import React, { useEffect, useRef } from "react"
+import AutoSizer from "react-virtualized-auto-sizer"
+import { FixedSizeList } from "react-window"
+import styled from "styled-components"
+import SpaceItem from "./SpaceItem"
 
 const getItemKey = (index, data) => data[index].node.id
 
@@ -26,23 +27,29 @@ const SpacesList = ({ spaces, search }) => {
   }
 
   return (
-    <AutoSizer defaultHeight={500} defaultWidth={200}>
-      {({ width, height }) => (
-        <FixedSizeList
-          itemCount={spaces.length}
-          itemData={itemData}
-          itemKey={getItemKey}
-          itemSize={100}
-          width={width}
-          height={height}
-          ref={listRef}
-        >
-          {SpacesListItem}
-        </FixedSizeList>
-      )}
-    </AutoSizer>
+    <ListContainer>
+      <AutoSizer defaultHeight={500} defaultWidth={200}>
+        {({ width, height }) => (
+          <FixedSizeList
+            itemCount={spaces.length}
+            itemData={itemData}
+            itemKey={getItemKey}
+            itemSize={100}
+            width={width}
+            height={height}
+            ref={listRef}
+          >
+            {SpacesListItem}
+          </FixedSizeList>
+        )}
+      </AutoSizer>
+    </ListContainer>
   )
 }
+
+const ListContainer = styled.div`
+  flex: 1 1 auto;
+`
 
 const SpacesListItem = ({ style, data, index }) => (
   <div style={style}>
