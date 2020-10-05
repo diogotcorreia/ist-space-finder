@@ -1,14 +1,13 @@
 import { graphql } from "gatsby"
 import React from "react"
-import SpaceItem from "../components/SpaceItem"
+import Layout from "../components/Layout"
+import SpacesList from "../components/SpacesList"
 
 export default function Home({ data }) {
   return (
-    <div>
-      {data.allSpace.edges.map(({ node }) => (
-        <SpaceItem node={node} key={node.id} />
-      ))}
-    </div>
+    <Layout>
+      <SpacesList spaces={data.allSpace.edges} />
+    </Layout>
   )
 }
 
