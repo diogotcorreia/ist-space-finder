@@ -10,6 +10,7 @@ export default function Home({ data }) {
     <Layout>
       <Searchbar setSearch={setSearch} />
       <SpacesList search={search} spaces={data.allSpace.edges} />
+      <div id="modal-portal" />
     </Layout>
   )
 }

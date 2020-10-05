@@ -1,18 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
-import Link from "./Link"
+import ImagePopup from "./ImagePopup"
 
 const SpaceItem = ({ node, style }) => {
+  const [open, setOpen] = useState(false)
   const { istId, name, type, path } = node
+
+  const openImage = () => setOpen(true)
+  const closeImage = () => setOpen(false)
+
+  const handleKeyDown = evt => evt.keyCode === 13 && openImage() // KeyCode 13 = ENTER
 
   return (
     <StyledRoot style={style}>
-      <p>
-        <SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
-        {` ${name} `}
-        <SpaceIstID id={istId} />
-      </p>
-      <SpacePath path={path} />
+      <div
+        style={{ height: "100%" }}
+        onClick={openImage}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+      >
+        <p>
+          <SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
+          {` ${name} `}
+          <SpaceIstID id={istId} />
+        </p>
+        <SpacePath path={path} />
+      </div>
+      <ImagePopup id={istId} open={open} onClose={closeImage} />
     </StyledRoot>
   )
 }
@@ -38,6 +53,7 @@ const formatType = str =>
 const StyledRoot = styled.div`
   height: 100px;
   box-sizing: content-box;
+  cursor: pointer;
   &:not(:first-child) {
     border-top: solid 1px #454545;
   }
@@ -56,16 +72,8 @@ const SpaceTypeBadge = styled.span`
   border-radius: 10px;
   padding: 0 5px;
 `
-const SpaceIstID = ({ id }) => {
-  return (
-    <Link
-      href={`https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}/blueprint`}
-      target="_blank"
-      rel="noopener"
-    >
-      <SpaceIstIDStyle>({id})</SpaceIstIDStyle>
-    </Link>
-  )
+const SpaceIstID = ({ id, onClick }) => {
+  return <SpaceIstIDStyle onClick={onClick}>({id})</SpaceIstIDStyle>
 }
 
 const SpaceIstIDStyle = styled.span`
