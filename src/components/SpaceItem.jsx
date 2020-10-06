@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import ImagePopup from "./ImagePopup"
+import LocationIcon from "./LocationIcon"
 
 const SpaceItem = ({ node, style }) => {
   const [open, setOpen] = useState(false)
@@ -23,8 +24,8 @@ const SpaceItem = ({ node, style }) => {
         <p>
           <SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
           {` ${name} `}
-          <SpaceIstID id={istId} />
         </p>
+        <LocationIcon />
         <SpacePath path={path} />
       </div>
       <ImagePopup id={istId} open={open} onClose={closeImage} />
@@ -33,7 +34,7 @@ const SpaceItem = ({ node, style }) => {
 }
 
 const SpacePath = ({ path = [] }) => {
-  if (path.length === 0) return null
+  if (path.length === 0) return <i>None</i>
   return path
     .map((pathItem, i) => (
       <span key={i}>
@@ -71,13 +72,6 @@ const SpaceTypeBadge = styled.span`
   background-color: ${props => colorMap[props.children]};
   border-radius: 10px;
   padding: 0 5px;
-`
-const SpaceIstID = ({ id, onClick }) => {
-  return <SpaceIstIDStyle onClick={onClick}>({id})</SpaceIstIDStyle>
-}
-
-const SpaceIstIDStyle = styled.span`
-  color: #9b9b9b;
 `
 
 export default SpaceItem

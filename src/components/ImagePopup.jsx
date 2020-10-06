@@ -5,6 +5,7 @@ import styled from "styled-components"
 const ImagePopup = ({ id, onClose }) => {
   return (
     <PopupBackground onClick={onClose}>
+      <AlignHelper />
       <StyledImg
         src={`https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}/blueprint`}
         alt="Space Blueprint"
@@ -27,6 +28,13 @@ const PopupBackground = styled.div`
 const StyledImg = styled.img`
   max-width: 100%;
   max-height: 100%;
+  vertical-align: middle;
+`
+
+const AlignHelper = styled.span`
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 `
 
 const ImagePopupPortal = ({ open, ...props }) => {

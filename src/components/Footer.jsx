@@ -21,7 +21,8 @@ const Footer = () => {
           rel="noopener"
         >
           GitHub
-        </Link>
+        </Link>{" "}
+        | Data from IST
       </p>
     </FooterStyle>
   )
