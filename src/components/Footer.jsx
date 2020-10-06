@@ -11,13 +11,14 @@ const Footer = () => {
           &#x1F499;
         </span>{" "}
         by{" "}
-        <Link href="https://diogotc.com" target="_blank">
+        <Link href="https://diogotc.com" target="_blank" rel="noopener">
           Diogo Correia
         </Link>{" "}
         | Source code on{" "}
         <Link
           href="https://github.com/diogotcorreia/ist-space-finder"
           target="_blank"
+          rel="noopener"
         >
           GitHub
         </Link>
