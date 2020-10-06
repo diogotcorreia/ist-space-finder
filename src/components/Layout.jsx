@@ -1,5 +1,5 @@
 import React from "react"
-import { Title } from "react-head"
+import { Meta, Title } from "react-head"
 import styled, { createGlobalStyle } from "styled-components"
 import Footer from "./Footer"
 import Header from "./Header"
@@ -21,6 +21,10 @@ const Layout = ({ children }) => {
   return (
     <Container>
       <Title>IST Space Finder | Find rooms/buildings in IST campi</Title>
+      <Meta
+        name="description"
+        content="Don't know where each room is inside IST campi? This web app will help you find your way around your campus!"
+      />
       <GlobalStyle />
       <Header />
       {children}

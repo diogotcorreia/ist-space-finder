@@ -37,6 +37,14 @@ module.exports = {
         theme_color: "#009de0",
         display: "standalone",
         icon: "src/images/ist_logo.png",
+        icons: [
+          {
+            src: `/favicons/maskable_icon.png`,
+            sizes: `769x769`,
+            type: `image/png`,
+            purpose: `maskable`,
+          },
+        ],
       },
     },
     {
