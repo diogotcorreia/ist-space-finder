@@ -17,6 +17,7 @@
     "babel-plugin-styled-components": "^1.11.1",
     "fuse.js": "^6.4.1",
     "gatsby": "^2.24.66",
+    "gatsby-plugin-load-script": "^1.1.0",
     "gatsby-plugin-manifest": "^2.4.33",
     "gatsby-plugin-offline": "^3.2.30",
     "gatsby-plugin-react-head": "^1.1.0",

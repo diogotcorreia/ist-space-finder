@@ -19,6 +19,15 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-load-script`,
+      options: {
+        src: "https://analytics.diogotc.com/umami.js",
+        async: true,
+        defer: true,
+        "data-website-id": "764d372a-8a7b-4d6f-9541-eaa3df6a2c32",
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: "IST Space Finder",
