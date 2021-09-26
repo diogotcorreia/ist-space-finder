@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import AutoSizer from "react-virtualized-auto-sizer"
 import { FixedSizeList } from "react-window"
 import styled from "styled-components"
+import useDebounce from "../hooks/useDebounce"
 import searchWorker from "../workers/searchWorker"
 import SpaceItem from "./SpaceItem"
 
@@ -13,6 +14,7 @@ const SpacesList = ({ spaces, setLoading, search }) => {
   const listRef = useRef(null)
   const abortRef = useRef(null)
   const [filteredSpaces, setFilteredSpaces] = useState(spaces)
+  const searchDebounced = useDebounce(search, 500)
 
   useEffect(() => {
     fuseRef.current = new Fuse(spaces, {
@@ -25,13 +27,13 @@ const SpacesList = ({ spaces, setLoading, search }) => {
   useEffect(() => {
     ;(async () => {
       if (abortRef.current) abortRef.current.abort()
-      if (search) {
+      if (searchDebounced) {
         setLoading(true)
 
         const abortController = new AbortController()
         abortRef.current = abortController
 
-        const searchResults = await searchWorker.search(search)
+        const searchResults = await searchWorker.search(searchDebounced)
 
         if (!abortController.signal.aborted) {
           setFilteredSpaces(searchResults)
@@ -42,7 +44,7 @@ const SpacesList = ({ spaces, setLoading, search }) => {
       }
       listRef.current.scrollTo(0)
     })()
-  }, [search, setFilteredSpaces, spaces, setLoading])
+  }, [searchDebounced, setFilteredSpaces, spaces, setLoading])
 
   return (
     <ListContainer>
