@@ -9,7 +9,7 @@ module.exports = {
   plugins: [
     `gatsby-source-ist-spaces`,
     `gatsby-plugin-styled-components`,
-    `gatsby-plugin-react-head`,
+    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-workerize-loader`,
     {
       resolve: `gatsby-plugin-web-font-loader`,
@@ -20,12 +20,13 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-load-script`,
+      resolve: `gatsby-plugin-umami`,
       options: {
-        src: "https://analytics.diogotc.com/umami.js",
-        async: true,
-        defer: true,
-        "data-website-id": "764d372a-8a7b-4d6f-9541-eaa3df6a2c32",
+        srcUrk: "https://umami.diogotc.com/umami.js",
+        websiteId: "764d372a-8a7b-4d6f-9541-eaa3df6a2c32",
+        includeInDevelopment: false,
+        autoTrack: true,
+        respectDoNotTrack: true,
       },
     },
     {
