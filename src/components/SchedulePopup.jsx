@@ -1,16 +1,16 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import styled from "styled-components"
-import Schedule from "./Schedule";
+import Schedule from "./Schedule"
 
-const SchedulePopup = ({id, onClose}) => {
-	return (
-		<PopupBackground onClick={onClose}>
-			<StyledDiv>
-				<Schedule id={id}/>
-			</StyledDiv>
-		</PopupBackground>
-	)
+const SchedulePopup = ({ id, onClose }) => {
+  return (
+    <PopupBackground onClick={onClose}>
+      <StyledDiv>
+        <Schedule id={id} />
+      </StyledDiv>
+    </PopupBackground>
+  )
 }
 
 const PopupBackground = styled.div`
@@ -34,13 +34,13 @@ const StyledDiv = styled.div`
   background: black;
 `
 
-const SchedulePopupPortal = ({open, ...props}) => {
-	if (!open) return null
+const SchedulePopupPortal = ({ open, ...props }) => {
+  if (!open) return null
 
-	return ReactDOM.createPortal(
-		<SchedulePopup {...props} />,
-		document.querySelector("#modal-portal")
-	)
+  return ReactDOM.createPortal(
+    <SchedulePopup {...props} />,
+    document.querySelector("#modal-portal")
+  )
 }
 
 export default SchedulePopupPortal

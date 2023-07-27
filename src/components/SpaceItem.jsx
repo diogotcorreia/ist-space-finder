@@ -1,69 +1,74 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import ImagePopup from "./ImagePopup"
 import LocationIcon from "./LocationIcon"
-import SchedulePopup from "./SchedulePopup";
-import ClockIcon from "./ClockIcon";
+import SchedulePopup from "./SchedulePopup"
+import ClockIcon from "./ClockIcon"
 
-const SpaceItem = ({node, style}) => {
-	const [openImg, setOpenImg] = useState(false)
-	const [openSched, setOpenSched] = useState(false)
-	const {istId, name, type, path} = node
+const SpaceItem = ({ node, style }) => {
+  const [openImg, setOpenImg] = useState(false)
+  const [openSched, setOpenSched] = useState(false)
+  const { istId, name, type, path } = node
 
-	const openImage = () => setOpenImg(true)
-	const closeImage = () => setOpenImg(false)
-	const openSchedule = () => setOpenSched(true)
-	const closeSchedule = () => setOpenSched(false)
+  const openImage = () => setOpenImg(true)
+  const closeImage = () => setOpenImg(false)
+  const openSchedule = () => setOpenSched(true)
+  const closeSchedule = () => setOpenSched(false)
 
-	const handleKeyDown = evt => evt.keyCode === 13 && openImage() // KeyCode 13 = ENTER
+  const handleImageKeyDown = evt => evt.keyCode === 13 && openImage() // KeyCode 13 = ENTER
+  const handleScheduleKeyDown = evt => evt.keyCode === 13 && openSchedule()
 
-	return (
-		<StyledRoot style={style}>
-			<div
-				style={{height: "100%"}}
-				onKeyDown={handleKeyDown}
-				role="button"
-				tabIndex={0}
-			>
-				<DivisionGrid>
-					<div onClick={openImage}>
-						<p>
-							<SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
-							{` ${name} `}
+  return (
+    <StyledRoot style={style}>
+      <div style={{ height: "100%" }}>
+        <DivisionGrid>
+          <div
+            onClick={openImage}
+            onKeyDown={handleImageKeyDown}
+            role="button"
+            tabIndex={0}
+          >
+            <p>
+              <SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
+              {` ${name} `}
+            </p>
+            <LocationIcon />
+            <SpacePath path={path} />
+          </div>
 
-						</p>
-						<LocationIcon/>
-						<SpacePath path={path}/>
-					</div>
-
-					<ClockDiv onClick={openSchedule}>
-						<ClockIcon/>
-					</ClockDiv>
-				</DivisionGrid>
-			</div>
-			<SchedulePopup open={openSched} id={istId} onClose={closeSchedule}/>
-			<ImagePopup id={istId} open={openImg} onClose={closeImage}/>
-		</StyledRoot>
-	)
+          <ClockDiv
+            onClick={openSchedule}
+            onKeyDown={handleScheduleKeyDown}
+            role="button"
+            tabIndex={0}
+          >
+            <ClockIcon />
+          </ClockDiv>
+        </DivisionGrid>
+      </div>
+      <SchedulePopup open={openSched} id={istId} onClose={closeSchedule} />
+      <ImagePopup id={istId} open={openImg} onClose={closeImage} />
+    </StyledRoot>
+  )
 }
 
-const SpacePath = ({path = []}) => {
-	if (path.length === 0) return <i>None</i>
-	return path
-		.map((pathItem, i) => (
-			<span key={i}>
+const SpacePath = ({ path = [] }) => {
+  if (path.length === 0) return <i>None</i>
+  return path
+    .map((pathItem, i) => (
+      <span key={i}>
         <SpaceTypeBadge>{pathItem.split(" ")[0]}</SpaceTypeBadge>
-				{` ${pathItem.split(" ").slice(1).join(" ")}`}
+        {` ${pathItem.split(" ").slice(1).join(" ")}`}
       </span>
-		))
-		.reduce((prev, curr) => [prev, ` ➧ `, curr])
+    ))
+    .reduce((prev, curr) => [prev, ` ➧ `, curr])
 }
 
 const formatType = str =>
-	`${str.charAt(0).toUpperCase()}${str
-		.slice(1)
-		.toLowerCase()
-		.replace("_", " ")}`
+  `${str.charAt(0).toUpperCase()}${str
+    .slice(1)
+    .toLowerCase()
+    .replace("_", " ")}`
 
 const StyledRoot = styled.div`
   height: 100px;
@@ -87,11 +92,11 @@ const ClockDiv = styled.div`
 `
 
 const colorMap = {
-	Campus: "#F39A27",
-	Building: "#579ABE",
-	Floor: "#03C03C",
-	Room: "#C23B23",
-	"Room subdivision": "#976ED7",
+  Campus: "#F39A27",
+  Building: "#579ABE",
+  Floor: "#03C03C",
+  Room: "#C23B23",
+  "Room subdivision": "#976ED7",
 }
 
 const SpaceTypeBadge = styled.span`
