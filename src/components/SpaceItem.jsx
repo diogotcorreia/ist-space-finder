@@ -12,16 +12,20 @@ const SpaceItem = ({ node, style }) => {
 
   const openImage = () => setOpenImg(true)
   const closeImage = () => setOpenImg(false)
+
   const openSchedule = () => setOpenSched(true)
   const closeSchedule = () => setOpenSched(false)
 
   const handleImageKeyDown = evt => evt.keyCode === 13 && openImage() // KeyCode 13 = ENTER
   const handleScheduleKeyDown = evt => evt.keyCode === 13 && openSchedule()
 
+  const formattedType = formatType(type)
+  const isRoom = formattedType === "Room"
+
   return (
     <StyledRoot style={style}>
       <div style={{ height: "100%" }}>
-        <DivisionGrid>
+        <DivisionGrid isRoom={isRoom}>
           <div
             onClick={openImage}
             onKeyDown={handleImageKeyDown}
@@ -29,21 +33,23 @@ const SpaceItem = ({ node, style }) => {
             tabIndex={0}
           >
             <p>
-              <SpaceTypeBadge>{formatType(type)}</SpaceTypeBadge>
+              <SpaceTypeBadge>{formattedType}</SpaceTypeBadge>
               {` ${name} `}
             </p>
             <LocationIcon />
             <SpacePath path={path} />
           </div>
 
-          <ClockDiv
-            onClick={openSchedule}
-            onKeyDown={handleScheduleKeyDown}
-            role="button"
-            tabIndex={0}
-          >
-            <ClockIcon />
-          </ClockDiv>
+          {isRoom && (
+            <ClockDiv
+              onClick={openSchedule}
+              onKeyDown={handleScheduleKeyDown}
+              role="button"
+              tabIndex={0}
+            >
+              <ClockIcon />
+            </ClockDiv>
+          )}
         </DivisionGrid>
       </div>
       <SchedulePopup open={openSched} id={istId} onClose={closeSchedule} />
@@ -82,13 +88,15 @@ const StyledRoot = styled.div`
 
 const DivisionGrid = styled.div`
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: ${props => (props["isRoom"] ? "80% 20%" : "100%")};
+  height: 100%;
 `
 
 const ClockDiv = styled.div`
-  float: right;
-  margin-left: 50%;
-  margin-top: 45px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const colorMap = {
