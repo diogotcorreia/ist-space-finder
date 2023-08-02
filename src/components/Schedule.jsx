@@ -4,6 +4,12 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import LoadingBar from "./LoadingBar"
 
+const COLORS = {
+  GENERIC: "#1282A2",
+  LESSON: "#388659",
+  EVALUATION: "#D35269",
+}
+
 const Schedule = ({ id }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -49,11 +55,20 @@ const Schedule = ({ id }) => {
 }
 
 function translateIntoEvent(event) {
-  return {
+  const fcEvent = {
     title: event.name,
     start: event.start,
     end: event.end,
+    backgroundColor: COLORS.GENERIC,
   }
+
+  if (event.type === "LESSON") {
+    fcEvent.backgroundColor = COLORS.LESSON
+  } else if (event.type === "EVALUATION") {
+    fcEvent.backgroundColor = COLORS.EVALUATION
+  }
+
+  return fcEvent
 }
 
 function translateIntoEvents(events) {
