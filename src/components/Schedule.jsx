@@ -1,26 +1,40 @@
-import React, { useEffect, useState } from "react"
 import FullCalendar from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import dayjs from "dayjs"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
+import LoadingBar from "./LoadingBar"
 
 const Schedule = ({ id }) => {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [events, setEvents] = useState([])
 
   useEffect(() => {
     const dateString = new dayjs().startOf("day").format("YYYY-MM-DD")
     const reqSite = `https://fenix.tecnico.ulisboa.pt/tecnico-api/v2/spaces/${id}/day/${dateString}`
 
+    setLoading(true)
+
     fetch(reqSite)
       .then(response => response.json())
       .then(resultData => {
         setEvents(translateIntoEvents(resultData.schedule))
+        setLoading(false)
       })
-      .catch(null)
+      .catch(() => {
+        setError(true)
+        setLoading(false)
+      })
   }, [id])
 
+  if (error) {
+    return <ErrorContainer>Failed to fetch schedule</ErrorContainer>
+  }
+
   return (
-    <Width>
+    <Container>
+      <LoadingBar loading={loading} />
       <FullCalendar
         initialView="timeGridDay"
         plugins={[timeGridPlugin]}
@@ -32,7 +46,7 @@ const Schedule = ({ id }) => {
         slotMinTime={"08:00:00"}
         slotMaxTime={"20:00:00"}
       />
-    </Width>
+    </Container>
   )
 }
 
@@ -48,8 +62,17 @@ function translateIntoEvents(events) {
   return events.map(translateIntoEvent)
 }
 
-const Width = styled.div`
-  width: 17em;
+const Container = styled.div`
+  width: clamp(1em, 90vw, 17em);
+  padding: 1em;
+`
+
+const ErrorContainer = styled.div`
+  background: #ff6961;
+  color: #121212;
+  padding: 1em 1.2em;
+  border-radius: 15px;
+  font-weight: bold;
 `
 
 export default Schedule
