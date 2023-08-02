@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
-import Schedule from "./Schedule"
 
-const SchedulePopup = ({ open, id, onClose }) => {
+const Dialog = ({ open, onClose, children }) => {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -15,7 +14,7 @@ const SchedulePopup = ({ open, id, onClose }) => {
 
   return (
     <StyledDiv ref={ref} onCancel={onClose} onClick={onClose}>
-      {open && <Schedule id={id} />}
+      {open && children}
     </StyledDiv>
   )
 }
@@ -37,4 +36,4 @@ const StyledDiv = styled.dialog`
   }
 `
 
-export default SchedulePopup
+export default Dialog

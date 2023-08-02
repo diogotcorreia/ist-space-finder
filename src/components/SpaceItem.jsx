@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import ClockIcon from "./ClockIcon"
+import Dialog from "./Dialog"
 import ImagePopup from "./ImagePopup"
 import LocationIcon from "./LocationIcon"
-import SchedulePopup from "./SchedulePopup"
-import ClockIcon from "./ClockIcon"
+import Schedule from "./Schedule"
 
 const SpaceItem = ({ node, style }) => {
   const [openImg, setOpenImg] = useState(false)
@@ -16,8 +17,8 @@ const SpaceItem = ({ node, style }) => {
   const openSchedule = () => setOpenSched(true)
   const closeSchedule = () => setOpenSched(false)
 
-  const handleImageKeyDown = evt => evt.keyCode === 13 && openImage() // KeyCode 13 = ENTER
-  const handleScheduleKeyDown = evt => evt.keyCode === 13 && openSchedule()
+  const handleImageKeyDown = evt => evt.code === "Enter" && openImage()
+  const handleScheduleKeyDown = evt => evt.code === "Enter" && openSchedule()
 
   const formattedType = formatType(type)
   const isRoom = formattedType === "Room"
@@ -52,7 +53,9 @@ const SpaceItem = ({ node, style }) => {
           )}
         </DivisionGrid>
       </div>
-      <SchedulePopup open={openSched} id={istId} onClose={closeSchedule} />
+      <Dialog open={openSched} onClose={closeSchedule}>
+        <Schedule id={istId} />
+      </Dialog>
       <ImagePopup id={istId} open={openImg} onClose={closeImage} />
     </StyledRoot>
   )
