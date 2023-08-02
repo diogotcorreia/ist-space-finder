@@ -38,13 +38,12 @@ const Schedule = ({ id }) => {
       <FullCalendar
         initialView="timeGridDay"
         plugins={[timeGridPlugin]}
-        headerToolbar={{ start: "title", center: "", end: "" }}
+        headerToolbar={{ start: "", center: "title", end: "" }}
         events={events}
-        height={"88vh"}
+        height="88vh"
         nowIndicator
         allDaySlot={false}
-        slotMinTime={"08:00:00"}
-        slotMaxTime={"20:00:00"}
+        scrollTime="08:00:00"
       />
     </Container>
   )
