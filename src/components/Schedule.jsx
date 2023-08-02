@@ -1,6 +1,5 @@
 import FullCalendar from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
-import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import LoadingBar from "./LoadingBar"
@@ -11,7 +10,7 @@ const Schedule = ({ id }) => {
   const [events, setEvents] = useState([])
 
   useEffect(() => {
-    const dateString = new dayjs().startOf("day").format("YYYY-MM-DD")
+    const dateString = new Date().toISOString().split("T")[0]
     const reqSite = `https://fenix.tecnico.ulisboa.pt/tecnico-api/v2/spaces/${id}/day/${dateString}`
 
     setLoading(true)
