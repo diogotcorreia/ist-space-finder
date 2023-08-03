@@ -20,7 +20,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-umami`,
       options: {
-        srcUrl: "https://umami.diogotc.com/umami.js",
+        srcUrl: "https://umami.diogotc.com/hellothere.js",
         websiteId: "764d372a-8a7b-4d6f-9541-eaa3df6a2c32",
         includeInDevelopment: false,
         autoTrack: true,
