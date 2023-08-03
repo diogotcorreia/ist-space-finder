@@ -4,7 +4,7 @@ import AutoSizer from "react-virtualized-auto-sizer"
 import { FixedSizeList } from "react-window"
 import styled from "styled-components"
 import useDebounce from "../hooks/useDebounce"
-import searchWorker from "../workers/searchWorker"
+import * as searchWorker from "../workers/searchWorker"
 import SpaceItem from "./SpaceItem"
 
 const getItemKey = (index, data) => data[index].node.id

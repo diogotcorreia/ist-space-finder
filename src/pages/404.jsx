@@ -14,6 +14,8 @@ const NotFoundPage = () => {
   )
 }
 
+export { Head } from "../components/Head"
+
 const CenteredDiv = styled.div`
   text-align: center;
   flex: 1 1 auto;

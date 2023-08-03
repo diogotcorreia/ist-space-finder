@@ -9,8 +9,6 @@ module.exports = {
   plugins: [
     `gatsby-source-ist-spaces`,
     `gatsby-plugin-styled-components`,
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-workerize-loader`,
     {
       resolve: `gatsby-plugin-web-font-loader`,
       options: {

@@ -26,6 +26,8 @@ export default function Home({ data }) {
   )
 }
 
+export { Head } from "../components/Head"
+
 const ProTip = styled.p`
   color: #aaa;
   font-size: 0.8rem;

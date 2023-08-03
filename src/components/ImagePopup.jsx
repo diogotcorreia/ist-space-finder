@@ -42,7 +42,7 @@ const ImagePopupPortal = ({ open, ...props }) => {
 
   return ReactDOM.createPortal(
     <ImagePopup {...props} />,
-    document.querySelector("#modal-portal")
+    document.querySelector("#modal-portal"),
   )
 }
 
