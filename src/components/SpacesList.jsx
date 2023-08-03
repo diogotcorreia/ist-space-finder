@@ -42,7 +42,7 @@ const SpacesList = ({ spaces, setLoading, search }) => {
       } else {
         setFilteredSpaces(spaces)
       }
-      listRef.current.scrollTo(0)
+      listRef.current?.scrollTo(0)
     })()
   }, [searchDebounced, setFilteredSpaces, spaces, setLoading])
 
