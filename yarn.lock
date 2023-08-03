@@ -5730,13 +5730,6 @@ gatsby-plugin-web-font-loader@^1.0.4:
     babel-runtime "^6.26.0"
     webfontloader "^1.6.28"
 
-gatsby-plugin-workerize-loader@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-workerize-loader/-/gatsby-plugin-workerize-loader-2.1.0.tgz#51bebd1c3b98e9f9838982ad77e00d15e0e446f7"
-  integrity sha512-blNmh1db5xCMrw0acqe7WO9EKZMbDT+6VMPeGqU2UzJsVDIWYSbXfbSzQWeFJO5YiR7yDvLsifEn+7yZE/vUQQ==
-  dependencies:
-    workerize-loader-wp5 "^2.0.2"
-
 gatsby-react-router-scroll@^6.11.0:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/gatsby-react-router-scroll/-/gatsby-react-router-scroll-6.11.0.tgz#b4d34c902773617670bdab51481a9a69d8d6634f"
@@ -7120,7 +7113,7 @@ loader-runner@^4.2.0:
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-4.2.0.tgz#d7022380d66d14c5fb1d496b89864ebcfd478384"
   integrity sha512-92+huvxMvYlMzMt0iIOukcwYBFpkYJdpl2xsZ7LrlayO7E8SOv+JJUEK17B/dJIHAOLMfh2dZZ/Y18WgmGtYNw==
 
-loader-utils@2.0.0, loader-utils@^2.0.0:
+loader-utils@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.0.tgz#e4cace5b816d425a166b5f097e10cd12b36064b0"
   integrity sha512-rP4F0h2RaWSvPEkD7BLDFQnvSf+nK+wr3ESUjNTyAGobqrijmW92zc+SO6d4p4B1wh7+B/Jg1mkQe5NYUEHtHQ==
@@ -10690,13 +10683,6 @@ workbox-window@^4.3.1:
   integrity sha512-C5gWKh6I58w3GeSc0wp2Ne+rqVw8qwcmZnQGpjiek8A2wpbxSJb1FdCoQVO+jDJs35bFgo/WETgl1fqgsxN0Hg==
   dependencies:
     workbox-core "^4.3.1"
-
-workerize-loader-wp5@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/workerize-loader-wp5/-/workerize-loader-wp5-2.0.2.tgz#d8d2c2504ecb7e183097b56b407d2e391071949a"
-  integrity sha512-AZyAKn3UHhFbQz44BP+7uWFFJBQWg2yJyDQoSAyToRYFkKCiiAcc3a9/TzL3xfBKlHXvFAWDb6FMTkXkUqV0BQ==
-  dependencies:
-    loader-utils "2.0.0"
 
 wrap-ansi@^6.2.0:
   version "6.2.0"

@@ -26,7 +26,6 @@
     "gatsby-plugin-styled-components": "^6.11.0",
     "gatsby-plugin-umami": "^0.1.5",
     "gatsby-plugin-web-font-loader": "^1.0.4",
-    "gatsby-plugin-workerize-loader": "2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-head": "^3.4.2",
