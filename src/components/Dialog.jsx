@@ -30,7 +30,7 @@ const StyledDiv = styled.dialog`
   border-radius: 15px;
   padding: 0;
 
-  ::backdrop {
+  &::backdrop {
     background: #00000077;
     backdrop-filter: blur(3px);
   }

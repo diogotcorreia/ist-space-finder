@@ -28,7 +28,7 @@ exports.sourceNodes = async ({
   const lastUpdated = await cache.get("lastUpdated")
   // 30 days cache
   if (lastUpdated > Date.now() - 1000 * 60 * 60 * 24 * 30) {
-    getNodesByType("Space").forEach(node => touchNode({ nodeId: node.id }))
+    getNodesByType("Space").forEach(node => touchNode(node))
     return
   }
 
@@ -36,7 +36,7 @@ exports.sourceNodes = async ({
 
   const crawlSpace = async (id, path = []) => {
     const { data: space } = await axios.get(
-      `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}`
+      `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}`,
     )
 
     const content = {
@@ -48,11 +48,11 @@ exports.sourceNodes = async ({
 
     const parent = space.parentSpace
       ? createNodeId(
-          `${capitalize(space.parentSpace.type)}-${space.parentSpace.id}`
+          `${capitalize(space.parentSpace.type)}-${space.parentSpace.id}`,
         )
       : null
     const children = (space.containedSpaces || []).map(childSpace =>
-      createNodeId(`${capitalize(childSpace.type)}-${childSpace.id}`)
+      createNodeId(`${capitalize(childSpace.type)}-${childSpace.id}`),
     )
 
     createNode({
@@ -72,13 +72,13 @@ exports.sourceNodes = async ({
         crawlSpace(childSpace.id, [
           ...path,
           `${capitalize(space.type)} ${space.name}`,
-        ])
-      )
+        ]),
+      ),
     )
   }
 
   const { data: topLevelSpaces } = await axios.get(
-    `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/`
+    `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/`,
   )
 
   await Promise.all(topLevelSpaces.map(space => crawlSpace(space.id)))

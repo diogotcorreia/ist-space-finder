@@ -26,7 +26,7 @@ const SpaceItem = ({ node, style }) => {
   return (
     <StyledRoot style={style}>
       <div style={{ height: "100%" }}>
-        <DivisionGrid isRoom={isRoom}>
+        <DivisionGrid $isRoom={isRoom}>
           <div
             onClick={openImage}
             onKeyDown={handleImageKeyDown}
@@ -91,7 +91,7 @@ const StyledRoot = styled.div`
 
 const DivisionGrid = styled.div`
   display: grid;
-  grid-template-columns: ${props => (props["isRoom"] ? "80% 20%" : "100%")};
+  grid-template-columns: ${props => (props.$isRoom ? "80% 20%" : "100%")};
   height: 100%;
 `
 
