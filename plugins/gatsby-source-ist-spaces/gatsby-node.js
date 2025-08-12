@@ -37,7 +37,10 @@ exports.sourceNodes = async ({
   const crawlSpace = async (id, path = []) => {
     const { data: space } = await axios.get(
       `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}`,
-    )
+    ).catch(function(error) {
+      console.log(error.toJSON());
+      throw error;
+    });
 
     const content = {
       istId: space.id,
@@ -48,8 +51,8 @@ exports.sourceNodes = async ({
 
     const parent = space.parentSpace
       ? createNodeId(
-          `${capitalize(space.parentSpace.type)}-${space.parentSpace.id}`,
-        )
+        `${capitalize(space.parentSpace.type)}-${space.parentSpace.id}`,
+      )
       : null
     const children = (space.containedSpaces || []).map(childSpace =>
       createNodeId(`${capitalize(childSpace.type)}-${childSpace.id}`),
@@ -79,7 +82,10 @@ exports.sourceNodes = async ({
 
   const { data: topLevelSpaces } = await axios.get(
     `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/`,
-  )
+  ).catch(function(error) {
+    console.log(error.toJSON());
+    throw error;
+  });
 
   await Promise.all(topLevelSpaces.map(space => crawlSpace(space.id)))
 
