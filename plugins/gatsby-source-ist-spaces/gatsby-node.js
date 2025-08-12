@@ -16,6 +16,19 @@ const axios = require("axios")
 const capitalize = str =>
   `${str.charAt(0).toUpperCase()}${str.slice(1).toLowerCase()}`
 
+const buildPath = (spaces, id) => {
+  let parentId = spaces[id].containedIn?.id;
+  const path = [];
+
+  while (parentId != null) {
+    let parent = spaces[parentId];
+    path.unshift(`${capitalize(parent.type)} ${parent.name}`);
+    parentId = parent.containedIn?.id;
+  }
+
+  return path;
+}
+
 exports.sourceNodes = async ({
   actions,
   cache,
@@ -34,27 +47,58 @@ exports.sourceNodes = async ({
 
   await cache.set("lastUpdated", Date.now())
 
-  const crawlSpace = async (id, path = []) => {
+  const { data: campi } = await axios.get(
+    `https://fenix.tecnico.ulisboa.pt/tecnico-api/v2/spaces/campi`,
+  ).catch(function(error) {
+    console.log(error.toJSON());
+    throw error;
+  });
+
+  const queue = [];
+  const spaces = {};
+
+  for (const campus of campi) {
+    spaces[campus.id] = campus;
+    queue.push(...campus.contains.map(space => space.id));
+  }
+
+  while (queue.length > 0) {
+    const spaceId = queue.pop();
     const { data: space } = await axios.get(
-      `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/${id}`,
+      `https://fenix.tecnico.ulisboa.pt/tecnico-api/v2/spaces/${spaceId}`,
     ).catch(function(error) {
       console.log(error.toJSON());
       throw error;
     });
 
+    spaces[spaceId] = space;
+    queue.push(...(space.contains || []).map(space => space.id));
+  }
+
+  for (const space of Object.values(spaces)) {
+    const path = buildPath(spaces, space.id);
+
+    let type = space.type;
+    // ROOM and ROOM_SUBDIVISION are swapped upstream: https://github.com/ist-dsi/tecnico-api/pull/1
+    if (type === "ROOM") {
+      type = "ROOM_SUBDIVISION";
+    } else if (type === "ROOM_SUBDIVISION") {
+      type = "ROOM";
+    }
+
     const content = {
       istId: space.id,
       name: (space.name || "").trim(),
-      type: space.type,
+      type,
       path,
     }
 
-    const parent = space.parentSpace
+    const parent = space.containedIn
       ? createNodeId(
-        `${capitalize(space.parentSpace.type)}-${space.parentSpace.id}`,
+        `${capitalize(space.containedIn.type)}-${space.containedIn.id}`,
       )
       : null
-    const children = (space.containedSpaces || []).map(childSpace =>
+    const children = (space.contains || []).map(childSpace =>
       createNodeId(`${capitalize(childSpace.type)}-${childSpace.id}`),
     )
 
@@ -69,25 +113,6 @@ exports.sourceNodes = async ({
         contentDigest: createContentDigest(content),
       },
     })
-
-    await Promise.all(
-      (space.containedSpaces || []).map(childSpace =>
-        crawlSpace(childSpace.id, [
-          ...path,
-          `${capitalize(space.type)} ${space.name}`,
-        ]),
-      ),
-    )
   }
 
-  const { data: topLevelSpaces } = await axios.get(
-    `https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/`,
-  ).catch(function(error) {
-    console.log(error.toJSON());
-    throw error;
-  });
-
-  await Promise.all(topLevelSpaces.map(space => crawlSpace(space.id)))
-
-  return
 }
