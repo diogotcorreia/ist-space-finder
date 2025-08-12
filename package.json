@@ -18,7 +18,7 @@
     "@fullcalendar/timegrid": "^6.1.8",
     "axios": "^1.4.0",
     "babel-plugin-styled-components": "^2.1.4",
-    "fuse.js": "^6.6.2",
+    "fuse.js": "^7.1.0",
     "gatsby": "^5.11.0",
     "gatsby-plugin-manifest": "^5.11.0",
     "gatsby-plugin-offline": "^6.11.0",
@@ -34,7 +34,7 @@
     "styled-components": "^6.0.6"
   },
   "devDependencies": {
-    "prettier": "3.0.1"
+    "prettier": "3.6.2"
   },
   "repository": {
     "type": "git",
